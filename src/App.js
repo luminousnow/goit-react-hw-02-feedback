@@ -1,4 +1,3 @@
-import './App.css';
 import Container from './components/Container';
 import Feedback from './components/Feedback';
 import Statistics from './components/Statistics';
