@@ -1,24 +1,25 @@
+import React from 'react';
 import s from './Statistics.module.css';
 
-function Statistics({ statistics, totalFeedback, positiveFeedback }) {
+function Statistics({ good, neutral, bad, total, positivePercentage }) {
   return (
     <section className={s.section}>
       <h1 className={s.title}>Statistics</h1>
       <ul className={s.statList}>
         <li className={s.stat}>
-          <span>Good:</span> {statistics.good}
+          <span>Good:</span> {good}
         </li>
         <li className={s.stat}>
-          <span>Neutral:</span> {statistics.neutral}
+          <span>Neutral:</span> {neutral}
         </li>
         <li className={s.stat}>
-          <span>Bad:</span> {statistics.bad}
+          <span>Bad:</span> {bad}
         </li>
         <li className={s.stat}>
-          <span>Total:</span> {totalFeedback}
+          <span>Total:</span> {total()}
         </li>
         <li className={s.stat}>
-          <span>Positive feedback:</span> {positiveFeedback}
+          <span>Positive feedback:</span> {positivePercentage()}%
         </li>
       </ul>
     </section>
