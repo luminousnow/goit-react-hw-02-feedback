@@ -1,8 +1,8 @@
-import Container from './components/Container';
-import Feedback from './components/Feedback';
-import Statistics from './components/Statistics';
-
 import React, { Component } from 'react';
+import Container from './components/Container';
+import Statistics from './components/Statistics';
+import FeedbackOptions from './components/FeedbackOptions';
+import Section from './components/Section';
 
 export class App extends Component {
   static defaultProps = {};
@@ -15,27 +15,11 @@ export class App extends Component {
     bad: 0,
   };
 
-  // // Один коллбек на різні data-action
-  // updateStatistics = event => {
-  //   // для асинхронного коду
-  //   let feedbackPressed = event.target.dataset.action;
-
-  //   this.setState((prevState, feedbackPressed) => ({
-  //     feedbackPressed: prevState.feedbackPressed + 1,
-  //   }));
-  //   // console.log(feedbackPressed);
-  // };
-
-  updateGood = () => {
-    this.setState(prevState => ({ good: prevState.good + 1 }));
-  };
-
-  updateNeutral = () => {
-    this.setState(prevState => ({ neutral: prevState.neutral + 1 }));
-  };
-
-  updateBad = () => {
-    this.setState(prevState => ({ bad: prevState.bad + 1 }));
+  // Один коллбек на різні data-action
+  updateStatistics = statName => {
+    this.setState(prevState => ({
+      [statName]: prevState[statName] + 1,
+    }));
   };
 
   countTotalFeedback = () => {
@@ -48,24 +32,31 @@ export class App extends Component {
 
   render() {
     const { good, neutral, bad } = this.state;
+    const {
+      updateStatistics,
+      countTotalFeedback,
+      countPositiveFeedbackPercentage,
+    } = this;
 
     return (
       <>
         <Container>
-          <Feedback
-            onGoodClick={this.updateGood}
-            onNeutralClick={this.updateNeutral}
-            onBadClick={this.updateBad}
-          />
-        </Container>
-        <Container>
-          <Statistics
-            good={good}
-            neutral={neutral}
-            bad={bad}
-            total={this.countTotalFeedback}
-            positivePercentage={this.countPositiveFeedbackPercentage}
-          />
+          <Section title={'Please leave feedback'}>
+            <FeedbackOptions
+              options={Object.keys(this.state)}
+              onLeaveFeedback={updateStatistics}
+            />
+          </Section>
+
+          <Section title={'Statistics'}>
+            <Statistics
+              good={good}
+              neutral={neutral}
+              bad={bad}
+              total={countTotalFeedback}
+              positivePercentage={countPositiveFeedbackPercentage}
+            />
+          </Section>
         </Container>
       </>
     );
