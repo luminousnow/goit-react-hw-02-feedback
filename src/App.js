@@ -6,10 +6,6 @@ import Section from './components/Section';
 import Notification from './components/Notification';
 
 export class App extends Component {
-  static defaultProps = {};
-
-  static propTypes = {};
-
   state = {
     good: 0,
     neutral: 0,
@@ -23,10 +19,12 @@ export class App extends Component {
     }));
   };
 
+  // сума відгуків
   countTotalFeedback = () => {
     return Object.values(this.state).reduce((acc, stat) => acc + stat, 0);
   };
 
+  // % Позитивних від загальної кількості
   countPositiveFeedbackPercentage = () => {
     return Math.round((this.state.good / this.countTotalFeedback()) * 100) || 0;
   };
