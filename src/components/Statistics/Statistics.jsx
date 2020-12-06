@@ -4,7 +4,6 @@ import s from './Statistics.module.css';
 function Statistics({ good, neutral, bad, total, positivePercentage }) {
   return (
     <section className={s.section}>
-      <h1 className={s.title}>Statistics</h1>
       <ul className={s.statList}>
         <li className={s.stat}>
           <span>Good:</span> {good}
