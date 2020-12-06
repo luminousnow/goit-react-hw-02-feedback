@@ -5,14 +5,19 @@ import Statistics from './components/Statistics';
 import React, { Component } from 'react';
 
 export class App extends Component {
+  static defaultProps = {};
+
+  static propTypes = {};
+
   state = {
     good: 0,
     neutral: 0,
     bad: 0,
   };
 
-  // Один коллбек на різні data-action
+  // // Один коллбек на різні data-action
   // updateStatistics = event => {
+  //   // для асинхронного коду
   //   let feedbackPressed = event.target.dataset.action;
 
   //   this.setState((prevState, feedbackPressed) => ({
@@ -34,18 +39,16 @@ export class App extends Component {
   };
 
   countTotalFeedback = () => {
-    this.setState(prevState => {
-      Object.keys(prevState).reduce((acc, value) => acc + prevState[value], 0);
-    });
-    // return Object.keys(this.setState).reduce(
-    //   (sum, key) => sum + parseFloat(this.setState[key] || 0),
-    //   0,
-    // );
+    return Object.values(this.state).reduce((acc, stat) => acc + stat, 0);
   };
 
-  countPositiveFeedbackPercentage = () => {};
+  countPositiveFeedbackPercentage = () => {
+    return Math.round((this.state.good / this.countTotalFeedback()) * 100) || 0;
+  };
 
   render() {
+    const { good, neutral, bad } = this.state;
+
     return (
       <>
         <Container>
@@ -57,9 +60,11 @@ export class App extends Component {
         </Container>
         <Container>
           <Statistics
-            statistics={this.state}
-            totalFeedback={this.countTotalFeedback}
-            positiveFeedback={this.countPositiveFeedbackPercentage}
+            good={good}
+            neutral={neutral}
+            bad={bad}
+            total={this.countTotalFeedback}
+            positivePercentage={this.countPositiveFeedbackPercentage}
           />
         </Container>
       </>
