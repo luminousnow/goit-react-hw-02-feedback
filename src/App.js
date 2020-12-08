@@ -12,7 +12,7 @@ export class App extends Component {
     bad: 0,
   };
 
-  // Один коллбек на різні data-action
+  // Один метод на різні Батони
   updateStatistics = statName => {
     this.setState(prevState => ({
       [statName]: prevState[statName] + 1,
